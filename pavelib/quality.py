@@ -874,12 +874,6 @@ def run_quality(options):
         below this percentage. For example, if p is set to 80, and diff-quality finds
         quality of the branch vs the compare branch is less than 80%, then this task will fail.
     """
-    # Directory to put the diff reports in.
-    # This makes the folder if it doesn't already exist.
-    dquality_dir = (Env.REPORT_DIR / "diff_quality").makedirs_p()
-
-    # Save the pass variable. It will be set to false later if failures are detected.
-    diff_quality_pass = True
     failure_reasons = []
 
     def _lint_output(linter, count, violations_list, is_html=False, limit=0):
@@ -917,103 +911,15 @@ def run_quality(options):
 
         return ''.join(lines)
 
-    # If pylint reports exist, use those
-    # Otherwise, `diff-quality` will call pylint itself
     (count, violations_list) = _get_pylint_violations(clean=False)
     _, upper_violations_limit, _, _ = _parse_pylint_options(options)
 
     # Print total number of violations to log
     print(_lint_output('pylint', count, violations_list, limit=upper_violations_limit))
     if count > upper_violations_limit > -1:
-        diff_quality_pass = False
         failure_reasons.append('Too many total violations.')
-
-    # ----- Set up for diff-quality pylint call -----
-    # Set the string to be used for the diff-quality --compare-branch switch.
-    compare_branch = getattr(options, 'compare_branch', 'origin/master')
-    compare_commit = sh(f'git merge-base HEAD {compare_branch}', capture=True).strip()
-    if sh('git rev-parse HEAD', capture=True).strip() != compare_commit:
-        compare_branch_string = f'--compare-branch={compare_commit}'
-
-        # Set the string, if needed, to be used for the diff-quality --fail-under switch.
-        diff_threshold = int(getattr(options, 'percentage', -1))
-        percentage_string = ''
-        if diff_threshold > -1:
-            percentage_string = f'--fail-under={diff_threshold}'
-
-        pylint_files = get_violations_reports("pylint")
-        pylint_reports = ' '.join(pylint_files)
-        if not run_diff_quality(
-            violations_type="pylint",
-            reports=pylint_reports,
-            percentage_string=percentage_string,
-            branch_string=compare_branch_string,
-            dquality_dir=dquality_dir
-        ):
-            diff_quality_pass = False
-            failure_reasons.append('Pylint violation(s) were found in the lines of code that were added or changed.')
-
-        eslint_files = get_violations_reports("eslint")
-        eslint_reports = ' '.join(eslint_files)
-        if not run_diff_quality(
-                violations_type="eslint",
-                reports=eslint_reports,
-                percentage_string=percentage_string,
-                branch_string=compare_branch_string,
-                dquality_dir=dquality_dir
-        ):
-            diff_quality_pass = False
-            failure_reasons.append('Eslint violation(s) were found in the lines of code that were added or changed.')
-
-    # If one of the quality runs fails, then paver exits with an error when it is finished
-    if not diff_quality_pass:
         msg = "FAILURE: " + " ".join(failure_reasons)
         fail_quality('diff_quality', msg)
-    else:
-        write_junit_xml('diff_quality')
-
-
-def run_diff_quality(
-        violations_type=None, reports=None, percentage_string=None, branch_string=None, dquality_dir=None
-):
-    """
-    This executes the diff-quality commandline tool for the given violation type (e.g., pylint, eslint).
-    If diff-quality fails due to quality issues, this method returns False.
-
-    """
-    try:
-        sh(
-            "diff-quality --violations={type} "
-            "{reports} {percentage_string} {compare_branch_string} "
-            "--html-report {dquality_dir}/diff_quality_{type}.html ".format(
-                type=violations_type,
-                reports=reports,
-                percentage_string=percentage_string,
-                compare_branch_string=branch_string,
-                dquality_dir=dquality_dir,
-            )
-        )
-        return True
-    except BuildFailure as failure:
-        if is_percentage_failure(failure.args):
-            return False
-        else:
-            fail_quality(
-                'diff_quality',
-                f'FAILURE: See "Diff Quality Report" in Jenkins left-sidebar for details. {failure}'
-            )
-
-
-def is_percentage_failure(error_message):
-    """
-    When diff-quality is run with a threshold percentage, it ends with an exit code of 1. This bubbles up to
-    paver with a subprocess return code error. If the subprocess exits with anything other than 1, raise
-    a paver exception.
-    """
-    if "Subprocess return code: 1" not in error_message:
-        return False
-    else:
-        return True
 
 
 def get_violations_reports(violations_type):
