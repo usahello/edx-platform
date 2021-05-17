@@ -13,9 +13,9 @@ import time
 from celery.app import shared_task
 from celery_utils.logged_task import LoggedTask
 from edx_django_utils.monitoring.internal.code_owner.utils import set_code_owner_attribute
+from django.core.management.base import BaseCommand
 from openedx.core.djangoapps.signals.signals import COURSE_CERT_DATE_CHANGE
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -37,7 +37,10 @@ def backfill_date_for_all_course_runs():
     """
     course_run_list = CourseOverview.objects.all()
     for index, course_run in enumerate(course_run_list):
-        send_cert_date_changed_signal.delay(str(course_run.id), course_run.certificate_available_date.strftime('%Y-%m-%dT%H:%M:%SZ'))
+        send_cert_date_changed_signal.delay(
+            str(course_run.id),
+            course_run.certificate_available_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+        )
         if index % 10 == 0:
             time.sleep(3)
 
