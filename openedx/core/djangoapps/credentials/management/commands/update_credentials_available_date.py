@@ -37,22 +37,10 @@ def backfill_date_for_all_course_runs():
     """
     course_run_list = CourseOverview.objects.all()
     for index, course_run in enumerate(course_run_list):
-        send_cert_date_changed_signal.delay(
-            str(course_run.id),
-            course_run.certificate_available_date.strftime('%Y-%m-%dT%H:%M:%SZ')
-        )
+        COURSE_CERT_DATE_CHANGE.send_robust(
+        sender=None,            
+        course_key=str(course_run.id),
+        available_date=course_run.certificate_available_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+    )
         if index % 10 == 0:
             time.sleep(3)
-
-
-@shared_task(base=LoggedTask, ignore_result=True)
-@set_code_owner_attribute
-def send_cert_date_changed_signal(course_key, available_date):
-    """
-    Sends a COURSE_CERT_DATE_CHANGE signal that will call into credentials to add the available_date
-    """
-    COURSE_CERT_DATE_CHANGE.send_robust(
-        sender=None,
-        course_key=course_key,
-        available_date=available_date
-    )
