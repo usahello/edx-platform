@@ -161,7 +161,6 @@ def _get_pylint_violations(systems=ALL_SYSTEMS.split(','), errors_only=False, cl
 @cmdopts([
     ("system=", "s", "System to act on"),
     ("errors", "e", "Check for errors only"),
-    ("limit=", "l", "Limits for number of acceptable violations - either <upper> or <lower>:<upper>"),
 ])
 @timed
 def run_pylint(options):
@@ -169,7 +168,6 @@ def run_pylint(options):
     Run pylint on system code. When violations limit is passed in,
     fail the task if too many violations are found.
     """
-    lower_violations_limit, upper_violations_limit, errors, systems = _parse_pylint_options(options)
     errors = getattr(options, 'errors', False)
     systems = getattr(options, 'system', ALL_SYSTEMS).split(',')
     result_name = 'pylint_{}'.format('_'.join(systems))
@@ -184,49 +182,14 @@ def run_pylint(options):
     with open(Env.METRICS_DIR / "pylint", "w") as f:
         f.write(violations_count_str)
 
-    # Fail when number of violations is less than the lower limit,
-    # which likely means that pylint did not run successfully.
-    # If pylint *did* run successfully, then great! Modify the lower limit.
-    if num_violations < lower_violations_limit > -1:
+    # Fail if there are violations found in pylint report.
+    if num_violations > 0:
         fail_quality(
             result_name,
-            "FAILURE: Too few pylint violations. "
-            "Expected to see at least {lower_limit} pylint violations. "
-            "Either pylint is not running correctly -or- "
-            "the limits should be lowered and/or the lower limit should be removed.".format(
-                lower_limit=lower_violations_limit
-            )
-        )
-
-    # Fail when number of violations is greater than the upper limit.
-    if num_violations > upper_violations_limit > -1:
-        fail_quality(
-            result_name,
-            "FAILURE: Too many pylint violations. "
-            "The limit is {upper_limit}.".format(upper_limit=upper_violations_limit)
+            "FAILURE: Pylint violations found."
         )
     else:
         write_junit_xml(result_name)
-
-
-def _parse_pylint_options(options):
-    """
-    Parse the options passed to run_pylint.
-    """
-    lower_violations_limit = upper_violations_limit = -1
-    violations_limit = getattr(options, 'limit', '').split(':')
-    if violations_limit[0]:
-        # Limit was specified.
-        if len(violations_limit) == 1:
-            # Only upper limit was specified.
-            upper_violations_limit = int(violations_limit[0])
-        else:
-            # Upper and lower limits were both specified.
-            lower_violations_limit = int(violations_limit[0])
-            upper_violations_limit = int(violations_limit[1])
-    errors = getattr(options, 'errors', False)
-    systems = getattr(options, 'system', ALL_SYSTEMS).split(',')
-    return lower_violations_limit, upper_violations_limit, errors, systems
 
 
 def _count_pylint_violations(report_file):
@@ -912,12 +875,11 @@ def run_quality(options):
         return ''.join(lines)
 
     (count, violations_list) = _get_pylint_violations(clean=False)
-    _, upper_violations_limit, _, _ = _parse_pylint_options(options)
 
     # Print total number of violations to log
-    print(_lint_output('pylint', count, violations_list, limit=upper_violations_limit))
-    if count > upper_violations_limit > -1:
-        failure_reasons.append('Too many total violations.')
+    print(_lint_output('pylint', count, violations_list))
+    if count > 0:
+        failure_reasons.append('Too many total pylint violations.')
         msg = "FAILURE: " + " ".join(failure_reasons)
         fail_quality('diff_quality', msg)
 
