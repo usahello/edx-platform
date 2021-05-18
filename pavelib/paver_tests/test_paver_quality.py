@@ -64,34 +64,6 @@ class TestPaverQualityViolations(unittest.TestCase):
         assert num == 2
 
 
-@ddt
-class TestPaverQualityOptions(unittest.TestCase):
-    """
-    Tests the paver pylint command-line options parsing.
-    """
-    @data(
-        ({'limit': '5500'}, (-1, 5500, False, pavelib.quality.ALL_SYSTEMS.split(','))),
-        ({'limit': '1000:5500'}, (1000, 5500, False, pavelib.quality.ALL_SYSTEMS.split(','))),
-        ({'limit': '1:2:3:4:5'}, (1, 2, False, pavelib.quality.ALL_SYSTEMS.split(','))),
-        ({'system': 'lms,cms'}, (-1, -1, False, ['lms', 'cms'])),
-        (
-            {'limit': '2000:5000', 'errors': True, 'system': 'lms,cms,openedx'},
-            (2000, 5000, True, ['lms', 'cms', 'openedx'])
-        ),
-    )
-    @unpack
-    def test_pylint_parser_other_string(self, options, expected_values):
-        class PaverOptions:
-            """
-            Simple options class to mimick paver's Namespace object.
-            """
-            def __init__(self, d):
-                self.__dict__ = d
-        paver_options = PaverOptions(options)
-        returned_values = pavelib.quality._parse_pylint_options(paver_options)  # pylint: disable=protected-access
-        assert returned_values == expected_values
-
-
 class TestPaverReportViolationsCounts(unittest.TestCase):
     """
     For testing utility functions for getting counts from reports for
