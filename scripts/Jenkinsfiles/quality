@@ -153,6 +153,20 @@ pipeline {
                 }
             }
         }
+        stage('Generate Quality Report'){
+            steps{
+                unstash 'quality-1-reports'
+                unstash 'quality-2-reports'
+                unstash 'quality-3-reports'
+                unstash 'quality-4-reports'
+                sh "./scripts/jenkins-quality-report.sh"
+            }
+            post {
+                always {
+                    qualityTestCleanup()
+                }
+            }
+        }
     }
     post {
         always {

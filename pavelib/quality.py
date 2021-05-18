@@ -822,20 +822,11 @@ def check_keywords():
 
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
-@cmdopts([
-    ("compare-branch=", "b", "Branch to compare against, defaults to origin/master"),
-    ("percentage=", "p", "fail if diff-quality is below this percentage"),
-    ("limit=", "l", "Limits for number of acceptable violations - either <upper> or <lower>:<upper>"),
-])
 @timed
 # pylint: disable=too-many-statements
-def run_quality(options):
+def run_quality():
     """
-    Build the html diff quality reports, and print the reports to the console.
-    :param: b, the branch to compare against, defaults to origin/master
-    :param: p, diff-quality will fail if the quality percentage calculated is
-        below this percentage. For example, if p is set to 80, and diff-quality finds
-        quality of the branch vs the compare branch is less than 80%, then this task will fail.
+    Build the html quality reports, and print the reports to the console.
     """
     failure_reasons = []
 
