@@ -78,4 +78,3 @@ git+https://github.com/edx-solutions/xblock-drag-and-drop-v2@v2.3.4#egg=xblock-d
 
 # USAHello inclusions
 -e git+https://github.com/usahello/edx-newsletter-signup.git@c404dbbae18d19731a129759967e7a8462b3112e#egg=edx-newsletter-signup
--e git+https://github.com/kory-northrop/channel_fireball.git@30665e767568da5e19dc52fdc9ab127ada515722#egg=channel_fireball
