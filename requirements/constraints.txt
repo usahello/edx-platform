@@ -12,11 +12,14 @@
 # This file contains all common constraints for edx-repos
 -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
 
-# celery 5.0 has dropped python3.5 support.
-celery<5.0
+# edx-platform currently only supported for Django 2.2.x
+django<2.3
 
-# cryptography 3.3 has dropped python3.5 support.
-cryptography<3.3
+# Newer versions need celery >= 5.0
+django-celery-results<2.1
+
+# We do not support version django-config-models<1.0.0
+django-config-models>=1.0.0
 
 # The CORS_ORIGIN_WHITELIST changes in a backwards incompatible way in 3.0.0, needs matching configuration repo changes
 django-cors-headers<3.0.0
