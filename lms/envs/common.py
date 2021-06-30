@@ -4673,4 +4673,4 @@ FAVICON_URL = None
 DEFAULT_EMAIL_LOGO_URL = 'https://edx-cdn.org/v3/default/logo.png'
 
 ##################### USAHello inclusions ############################
-INSTALLED_APPS.append('edx-newsletter-signup')
+# INSTALLED_APPS.append('edx-newsletter-signup')
