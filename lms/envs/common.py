@@ -3090,6 +3090,7 @@ INSTALLED_APPS = [
     # in the LMS process at the moment, so anything that has Django admin access
     # permissions needs to be listed as an LMS app or the script will fail.
     'user_tasks',
+
 ]
 
 ######################### CSRF #########################################
@@ -3339,10 +3340,10 @@ LOGIN_REDIRECT_WHITELIST = []
 REGISTRATION_EXTRA_FIELDS = {
     'confirm_email': 'hidden',
     'level_of_education': 'optional',
-    'gender': 'optional',
-    'year_of_birth': 'optional',
+    'gender': 'hidden',
+    'year_of_birth': 'hidden',
     'mailing_address': 'optional',
-    'goals': 'optional',
+    'goals': 'hidden',
     'honor_code': 'required',
     'terms_of_service': 'hidden',
     'city': 'hidden',
@@ -4133,7 +4134,7 @@ FINANCIAL_ASSISTANCE_MAX_LENGTH = 2500
 # need to add the model's app to the ADDL_INSTALLED_APPS array in your
 # lms.yml file.
 
-REGISTRATION_EXTENSION_FORM = None
+REGISTRATION_EXTENSION_FORM = 'common.djangoapps.usahello.registrationfields.forms.ExtraInfoForm'
 
 # Identifier included in the User Agent from open edX mobile apps.
 MOBILE_APP_USER_AGENT_REGEXES = [
@@ -4673,4 +4674,5 @@ FAVICON_URL = None
 DEFAULT_EMAIL_LOGO_URL = 'https://edx-cdn.org/v3/default/logo.png'
 
 ##################### USAHello inclusions ############################
-# INSTALLED_APPS.append('edx-newsletter-signup')
+# INSTALLED_APPS.append('openedx.features.usahello.mailchimp.apps.MailchimpConfig')
+INSTALLED_APPS.append('common.djangoapps.usahello.registrationfields.apps.RegistrationfieldsConfig')
