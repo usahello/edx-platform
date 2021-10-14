@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2021-06-08 17:56+0000\n"
-"PO-Revision-Date: 2021-06-08 17:57:33.839972\n"
+"POT-Creation-Date: 2021-10-14 08:34+0000\n"
+"PO-Revision-Date: 2021-10-14 08:34:40.267784\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "Language: en\n"
@@ -1221,37 +1221,31 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Show Annotations"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Hide Annotations"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Expand Instructions"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Collapse Instructions"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Commentary"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 #: common/static/bundles/AnnotatableBlockPreview.js
-#: common/static/bundles/AnnotatableModule.js
 msgid "Reply to Annotation"
 msgstr ""
 
@@ -3404,7 +3398,7 @@ msgid "Insert/Edit Image"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/lti/lti.js
-#: common/static/bundles/LTIBlockPreview.js common/static/bundles/LTIModule.js
+#: common/static/bundles/LTIBlockPreview.js
 msgid ""
 "Click OK to have your username and e-mail address sent to a 3rd party application.\n"
 "\n"
@@ -3412,7 +3406,7 @@ msgid ""
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/lti/lti.js
-#: common/static/bundles/LTIBlockPreview.js common/static/bundles/LTIModule.js
+#: common/static/bundles/LTIBlockPreview.js
 msgid ""
 "Click OK to have your username sent to a 3rd party application.\n"
 "\n"
@@ -3420,7 +3414,7 @@ msgid ""
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/lti/lti.js
-#: common/static/bundles/LTIBlockPreview.js common/static/bundles/LTIModule.js
+#: common/static/bundles/LTIBlockPreview.js
 msgid ""
 "Click OK to have your e-mail address sent to a 3rd party application.\n"
 "\n"
