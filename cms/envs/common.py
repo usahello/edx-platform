@@ -748,7 +748,8 @@ MIDDLEWARE = [
     'openedx.core.djangoapps.embargo.middleware.EmbargoMiddleware',
 
     # Detects user-requested locale from 'accept-language' header in http request
-    'django.middleware.locale.LocaleMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
+    'openedx.features.usahello_features.middleware.ExtendedLocaleMiddleware',
 
     'codejail.django_integration.ConfigureCodeJailMiddleware',
 
