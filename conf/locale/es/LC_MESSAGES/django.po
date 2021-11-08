@@ -10210,6 +10210,14 @@ msgid "You must accept the terms of service."
 msgstr "Debes aceptar los términos del servicio."
 
 #: openedx/core/djangoapps/user_authn/views/registration_form.py
+msgid "reCAPTCHA field is required"
+msgstr "El campo reCAPTCHA es obligatorio"
+
+#: openedx/core/djangoapps/user_authn/views/registration_form.py
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "Error al verificar reCAPTCHA. Vuelve a intentarlo."
+
+#: openedx/core/djangoapps/user_authn/views/registration_form.py
 msgid "A level of education is required"
 msgstr "Se requiere un nivel de educación."
 

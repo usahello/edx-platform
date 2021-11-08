@@ -65,6 +65,8 @@
                     this.registerFormSubmitButtonText =
                         data.thirdPartyAuth.registerFormSubmitButtonText || _('Create Account');
                     this.is_require_third_party_auth_enabled = data.is_require_third_party_auth_enabled || false;
+                    this.languageCode = data.languageCode;
+                    this.recaptchaSiteKey = data.recaptchaSiteKey;
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                     this.listenTo(this.model, 'validation', this.renderLiveValidations);
@@ -133,6 +135,33 @@
                     this.render(html.join(''));
                 },
 
+                loadCaptcha: function() {
+                    var self = this;
+                    var getRecaptchaResponse = function(response) {
+                        self.captchaResponse = response;
+                        self.toggleDisableButton(false);
+                    };
+
+                    var recaptchaExpiredCallback = function() {
+                        self.toggleDisableButton(true);
+                    }
+                
+                    var renderCaptcha = function() {
+                        self.captchaWidgetId = grecaptcha.render('register-recaptcha', {
+                            sitekey : self.recaptchaSiteKey,
+                            callback: getRecaptchaResponse,
+                            'expired-callback': recaptchaExpiredCallback
+                      });
+                    };
+                
+                    window.renderCaptcha = renderCaptcha;
+                    
+                    var recaptchaScriptUrl = 'https://www.google.com/recaptcha/api.js?hl='+ this.languageCode +'&onload=renderCaptcha&render=explicit'
+                    $.getScript(recaptchaScriptUrl, function() {
+                        self.toggleDisableButton(true);
+                    });
+                },
+
                 render: function(html) {
                     var fields = html || '',
                         formErrorsTitle = gettext('An error occurred.'),
@@ -174,6 +203,7 @@
                 },
 
                 postRender: function() {
+                    this.loadCaptcha();
                     var inputs = this.$('.form-field'),
                         inputSelectors = 'input, select, textarea',
                         inputTipSelectors = ['tip error', 'tip tip-input'],
