@@ -1607,6 +1607,9 @@ INSTALLED_APPS = [
 
     # Database-backed Organizations App (http://github.com/edx/edx-organizations)
     'organizations',
+
+    # Django repatcha
+    'captcha',
 ]
 
 
