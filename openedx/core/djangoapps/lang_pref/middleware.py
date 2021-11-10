@@ -71,7 +71,7 @@ class LanguagePreferenceMiddleware(MiddlewareMixin):
         If a user's UserPreference contains a language preference, use the user's preference.
         Save the current language preference cookie as the user's preferred language.
         """
-        custom_lang = request.GET.get('custom_lang')
+        custom_lang = request.GET.get('user_lang')
 
         self._handle_custom_language(request, custom_lang)
         cookie_lang = request.session.get('custom_lang')
