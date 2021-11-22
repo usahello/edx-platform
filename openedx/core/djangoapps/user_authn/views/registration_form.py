@@ -34,7 +34,7 @@ from common.djangoapps.util.password_policy_validators import (
     password_validators_restrictions,
     validate_password,
 )
-
+from captcha.fields import ReCaptchaField
 
 class TrueCheckbox(widgets.CheckboxInput):
     """
@@ -168,7 +168,8 @@ class AccountCreationForm(forms.Form):
         extra_fields=None,
         extended_profile_fields=None,
         do_third_party_auth=True,
-        tos_required=True
+        tos_required=True,
+        recaptcha_required=False
     ):
         super().__init__(data)
 
@@ -178,6 +179,15 @@ class AccountCreationForm(forms.Form):
         if tos_required:
             self.fields["terms_of_service"] = TrueField(
                 error_messages={"required": _("You must accept the terms of service.")}
+            )
+
+        if recaptcha_required:
+            self.fields["recaptcha"] = ReCaptchaField(
+                error_messages={
+                    "required": _("reCAPTCHA field is required"),
+                    "captcha_error": _("Error verifying reCAPTCHA, please try again."),
+                    "captcha_invalid": _("Error verifying reCAPTCHA, please try again."),
+                }
             )
 
         error_message_dict = {

@@ -201,6 +201,7 @@ def create_account_with_params(request, params):
         extended_profile_fields=extended_profile_fields,
         do_third_party_auth=False,
         tos_required=tos_required,
+        recaptcha_required=True,
     )
     custom_form = get_registration_extension_form(data=params)
 

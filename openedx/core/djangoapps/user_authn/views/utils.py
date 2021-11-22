@@ -37,7 +37,7 @@ def third_party_auth_context(request, redirect_to, tpa_hint=None):
         "secondaryProviders": [],
         "finishAuthUrl": None,
         "errorMessage": None,
-        "registerFormSubmitButtonText": _("Create Account"),
+        "registerFormSubmitButtonText": _("Sign up now"),
         "syncLearnerProfileData": False,
         "pipeline_user_details": {}
     }

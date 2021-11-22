@@ -84,6 +84,8 @@
                     this.isMultipleUserEnterprisesFeatureEnabled =
                         options.is_multiple_user_enterprises_feature_enabled || false;
                     this.is_require_third_party_auth_enabled = options.is_require_third_party_auth_enabled || false;
+                    this.languageCode = options.language_code;
+                    this.recaptchaSiteKey = options.recaptcha_site_key;
 
                 // The login view listens for 'sync' events from the reset model
                     this.resetModel = new PasswordResetModel({}, {
@@ -208,7 +210,9 @@
                             thirdPartyAuth: this.thirdPartyAuth,
                             platformName: this.platformName,
                             hideAuthWarnings: this.hideAuthWarnings,
-                            is_require_third_party_auth_enabled: this.is_require_third_party_auth_enabled
+                            is_require_third_party_auth_enabled: this.is_require_third_party_auth_enabled,
+                            languageCode: this.languageCode,
+                            recaptchaSiteKey: this.recaptchaSiteKey 
                         });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.

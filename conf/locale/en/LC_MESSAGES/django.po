@@ -38,8 +38,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2021-06-08 17:57+0000\n"
-"PO-Revision-Date: 2021-06-08 17:57:33.725577\n"
+"POT-Creation-Date: 2021-11-08 14:20+0000\n"
+"PO-Revision-Date: 2021-11-08 14:20:14.465270\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "Language: en\n"
@@ -48,6 +48,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.9.0\n"
+
+#: build/lib/cms/urls.py cms/urls.py
+msgid "Studio Administration"
+msgstr ""
+
+#: build/lib/lms/urls.py lms/urls.py
+msgid "LMS Administration"
+msgstr ""
 
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: 'Discussion' refers to the tab in the courseware that leads to
@@ -8490,10 +8498,6 @@ msgstr ""
 msgid "Restoring to this revision will mark the article as deleted."
 msgstr ""
 
-#: lms/urls.py
-msgid "LMS Administration"
-msgstr ""
-
 #: openedx/core/djangoapps/ace_common/apps.py
 msgid "ACE Common"
 msgstr ""
@@ -10119,6 +10123,14 @@ msgid "You must accept the terms of service."
 msgstr ""
 
 #: openedx/core/djangoapps/user_authn/views/registration_form.py
+msgid "reCAPTCHA field is required"
+msgstr ""
+
+#: openedx/core/djangoapps/user_authn/views/registration_form.py
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr ""
+
+#: openedx/core/djangoapps/user_authn/views/registration_form.py
 msgid "A level of education is required"
 msgstr ""
 
@@ -10266,7 +10278,7 @@ msgid ""
 msgstr ""
 
 #: openedx/core/djangoapps/user_authn/views/utils.py
-msgid "Create Account"
+msgid "Sign up now"
 msgstr ""
 
 #: openedx/core/djangoapps/util/user_messages.py
@@ -11510,10 +11522,6 @@ msgstr ""
 
 #: cms/lib/xblock/tagging/tagging.py
 msgid "Dictionary with the available tags"
-msgstr ""
-
-#: cms/urls.py
-msgid "Studio Administration"
 msgstr ""
 
 #: cms/templates/404.html cms/templates/error.html

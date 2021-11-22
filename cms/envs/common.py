@@ -748,7 +748,8 @@ MIDDLEWARE = [
     'openedx.core.djangoapps.embargo.middleware.EmbargoMiddleware',
 
     # Detects user-requested locale from 'accept-language' header in http request
-    'django.middleware.locale.LocaleMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
+    'openedx.features.usahello_features.middleware.ExtendedLocaleMiddleware',
 
     'codejail.django_integration.ConfigureCodeJailMiddleware',
 
@@ -1606,6 +1607,9 @@ INSTALLED_APPS = [
 
     # Database-backed Organizations App (http://github.com/edx/edx-organizations)
     'organizations',
+
+    # Django repatcha
+    'captcha',
 ]
 
 

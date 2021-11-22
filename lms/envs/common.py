@@ -2049,7 +2049,8 @@ MIDDLEWARE = [
 
     # Detects user-requested locale from 'accept-language' header in http request.
     # Must be after DarkLangMiddleware.
-    'django.middleware.locale.LocaleMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
+    'openedx.features.usahello_features.middleware.ExtendedLocaleMiddleware',
 
     'lms.djangoapps.discussion.django_comment_client.utils.ViewNameMiddleware',
     'codejail.django_integration.ConfigureCodeJailMiddleware',
@@ -3108,6 +3109,9 @@ INSTALLED_APPS = [
     # in the LMS process at the moment, so anything that has Django admin access
     # permissions needs to be listed as an LMS app or the script will fail.
     'user_tasks',
+
+    # Django repatcha
+    'captcha',
 ]
 
 ######################### CSRF #########################################
