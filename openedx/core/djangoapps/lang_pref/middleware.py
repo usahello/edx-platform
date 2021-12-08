@@ -29,12 +29,9 @@ class LanguagePreferenceMiddleware(MiddlewareMixin):
     def _is_preferences_api_call_for_language(self, request):
         try:
             data = json.loads(request.body.decode('utf8'))
-        except RawPostDataException:
-            data = json.loads(request.data)
-        except json.JSONDecodeError:
+            return data.get(LANGUAGE_KEY, False)
+        except Exception:
             return False
-
-        return data.get(LANGUAGE_KEY, False)
 
     def _should_surpass_custom_lang(self, request):
         pref_lang = self._is_preferences_api_call_for_language(request)
