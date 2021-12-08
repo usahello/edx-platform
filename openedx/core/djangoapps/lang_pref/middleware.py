@@ -9,6 +9,7 @@ from django.utils.deprecation import MiddlewareMixin
 from django.urls import reverse
 from django.utils.translation import LANGUAGE_SESSION_KEY
 from django.utils.translation.trans_real import parse_accept_lang_header
+from django.http.request import RawPostDataException
 
 from openedx.core.djangoapps.dark_lang.models import DarkLangConfig
 from openedx.core.djangoapps.lang_pref import COOKIE_DURATION, LANGUAGE_HEADER, LANGUAGE_KEY
@@ -29,7 +30,7 @@ class LanguagePreferenceMiddleware(MiddlewareMixin):
         try:
             data = json.loads(request.body.decode('utf8'))
             return data.get(LANGUAGE_KEY, False)
-        except json.JSONDecodeError:
+        except Exception:
             return False
 
     def _should_surpass_custom_lang(self, request):
@@ -42,7 +43,6 @@ class LanguagePreferenceMiddleware(MiddlewareMixin):
         return pref_lang
 
     def _handle_custom_language(self, request, custom_lang):
-        # import pdb; pdb.set_trace()
 
         expected_surpass_custom_lang_value = None
         if request.session.get('surpass_custom_lang'):
@@ -106,7 +106,6 @@ class LanguagePreferenceMiddleware(MiddlewareMixin):
             current_user = getattr(request.user, 'real_user', request.user)
 
         if current_user and current_user.is_authenticated:
-            # import pdb; pdb.set_trace()
             anonymous_cookie_lang = getattr(request, '_anonymous_user_cookie_lang', None)
             if anonymous_cookie_lang:
                 user_pref = anonymous_cookie_lang
