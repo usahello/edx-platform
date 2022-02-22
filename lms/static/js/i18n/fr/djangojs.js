@@ -351,6 +351,7 @@
     "Bulk Exceptions": "D\u00e9rogations en lot",
     "Bullet list": "Liste \u00e0 puces",
     "Bulleted List (Ctrl+U)": "List \u00e0 Puces (Ctrl+U)",
+    "By signing up for this site, you agree to your personal data being stored and used as per USAHello's {linkStart}Privacy Policy{linkEnd}.": "En vous inscrivant \u00e0 ce site, vous acceptez que vos donn\u00e9es personnelles soient stock\u00e9es et utilis\u00e9es conform\u00e9ment \u00e0 la {linkStart}Politique de confidentialit\u00e9{linkEnd} d'USAHello.",
     "COMPLETED COURSES": "TERMINE",
     "COURSES IN PROGRESS": "EN COURS",
     "Can I request additional time to complete my exam?": "Puis-je demander un temps additionnel pour compl\u00e9ter mon examen ?",
