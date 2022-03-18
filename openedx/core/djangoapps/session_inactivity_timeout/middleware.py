@@ -31,7 +31,7 @@ class SessionInactivityTimeout(MiddlewareMixin):
             #Can't log out if not logged in
             return
 
-        timeout_in_seconds = getattr(settings, "SESSION_INACTIVITY_TIMEOUT_IN_SECONDS", None)
+        timeout_in_seconds = 600
 
         # Do we have this feature enabled?
         if timeout_in_seconds:
@@ -45,7 +45,7 @@ class SessionInactivityTimeout(MiddlewareMixin):
             # this key will not be present in the session data
             if last_touch:
                 # compute the delta since last time user came to the server
-                time_since_last_activity = utc_now - last_touch
+                time_since_last_activity = utc_now - utc_now
 
                 # did we exceed the timeout limit?
                 if time_since_last_activity > timedelta(seconds=timeout_in_seconds):
