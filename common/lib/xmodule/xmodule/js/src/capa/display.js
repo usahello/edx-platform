@@ -912,6 +912,7 @@
                                 that.el.find('.show').removeAttr('disabled');
                                 that.showAnswerNotification.hide();
                                 that.submitAnswersAndSubmitButton();
+                                that.el.find('.wrapper-problem-response .message').hide();
                             });
                         }
                     });
@@ -930,6 +931,7 @@
                         that.saveNotification.hide();
                         that.showAnswerNotification.hide();
                         that.submitAnswersAndSubmitButton();
+                        that.el.find('.wrapper-problem-response .message').hide();
                     });
                 }
             });
