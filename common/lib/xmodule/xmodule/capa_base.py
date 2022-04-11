@@ -710,6 +710,12 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             'msg': total_text,
         }
 
+    def should_enable_show_answer_button(self):
+        """
+        Hide 'Show Answer' button for a correct response
+        """
+        return not self.is_correct()
+
     def get_problem_html(self, encapsulate=True, submit_notification=False):
         """
         Return html for the problem.
@@ -779,6 +785,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             'has_saved_answers': self.has_saved_answers,
             'save_message': save_message,
             'submit_disabled_cta': submit_disabled_ctas[0] if submit_disabled_ctas else None,
+            'should_enable_show_answer_button': self.should_enable_show_answer_button(),
         }
 
         html = self.runtime.render_template('problem.html', context)

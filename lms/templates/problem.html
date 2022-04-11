@@ -45,7 +45,7 @@ from openedx.core.djangolib.markup import HTML
           <button type="button" class="reset problem-action-btn btn-link btn-small" data-value="${_('Reset')}"><span aria-hidden="true">${_('Reset')}</span><span class="sr">${_("Reset your answer")}</span></button>
       </span>
       % endif
-      % if answer_available:
+      % if should_enable_show_answer_button and answer_available:
       <span class="problem-action-button-wrapper">
           <button type="button" class="show problem-action-btn btn-link btn-small" aria-describedby="${ short_id }-problem-title"><span class="show-label">${_('Show answer')}</span></button>
       </span>
