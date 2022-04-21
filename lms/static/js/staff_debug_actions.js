@@ -28,6 +28,7 @@ var StaffDebug = (function() {
     };
 
     var doInstructorDashAction = function(action) {
+        checkDashVariableScope();
         var user = getUser(action.locationName);
         var pdata = {
             problem_to_reset: action.location,
@@ -201,4 +202,24 @@ $(document).ready(function() {
         );
         return false;
     });
+});
+
+// For checking is the variable '_' loaded by Underscore or Lodash
+let checkDashVariableScope = (function (){
+  var isLodash = false;
+  // If _ is defined and the function _.forEach exists then we know underscore OR lodash are in place
+  if ( 'undefined' != typeof(_) && 'function' == typeof(_.forEach) ) {
+    // A small sample of some of the functions that exist in lodash but not underscore
+    var funcs = [ 'now', 'before', 'negate' ];
+    // Simplest if assume exists to start
+    isLodash  = true;
+    funcs.forEach( function ( func ) {
+      // If just one of the functions do not exist, then not lodash
+      isLodash = ('function' != typeof(_[ func ])) ? false : isLodash;
+    } );
+  }
+  if ( ! isLodash ) {
+    // We know that underscore is loaded in the _ variable, we'll reload Lodash in it.
+    window.lodash = _.noConflict();
+  }
 });
